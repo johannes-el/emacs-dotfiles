@@ -28,6 +28,20 @@
   :ensure t)
 (evil-mode 1)
 
+(use-package company
+  :ensure t)
+
+(use-package eglot
+    :ensure t)
+  (require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'cmake-mode-hook 'eglot-ensure)
+(add-hook 'go-mode-hook 'eglot-ensure)
+(add-hook 'rust-mode-hook 'eglot-ensure)
+
 (use-package magit
   :ensure t)
 
@@ -63,3 +77,4 @@
     common-lisp-mode
     lisp-mode
     LaTeX-mode)))
+(rainbow-delimiters-mode 1)

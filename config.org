@@ -40,7 +40,7 @@ Initialize the package system.
   (package-initialize)
 #+end_src
 
-** Intalling and using 'use-package'
+** Intalling and using "use-package"
 #+begin_src emacs-lisp
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -56,11 +56,34 @@ Initialize the package system.
 #+end_src
 
 ** Evil-mode & Evil-collection
-For VI-like keybindings.
+For Vi-like keybindings.
 #+begin_src emacs-lisp
 (use-package evil
   :ensure t)
 (evil-mode 1)
+#+end_src
+
+** Company
+The modular completion framework
+#+begin_src emacs-lisp
+(use-package company
+  :ensure t)
+#+end_src
+
+** Eglot (Emacs Polyglot)
+The Emacs LSP client that stays out of your way.
+Requires =clangd= and =rust-analyzer= to be installed.
+#+begin_src emacs-lisp
+    (use-package eglot
+      :ensure t)
+    (require 'eglot)
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer"))
+  (add-hook 'c-mode-hook 'eglot-ensure)
+  (add-hook 'c++-mode-hook 'eglot-ensure)
+  (add-hook 'cmake-mode-hook 'eglot-ensure)
+  (add-hook 'go-mode-hook 'eglot-ensure)
+  (add-hook 'rust-mode-hook 'eglot-ensure)
 #+end_src
 
 ** Magit (Magit is magic)
@@ -117,4 +140,5 @@ Music files are located in *~/.emmsMusic/*.
     common-lisp-mode
     lisp-mode
     LaTeX-mode)))
+(rainbow-delimiters-mode 1)
 #+end_src
