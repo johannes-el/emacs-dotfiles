@@ -1,0 +1,120 @@
+#+TITLE: GNU Emacs Configuration
+#+AUTHOR: Johannes Elsing
+#+PROPERTY: header-args:emacs-lisp :tangle config.el
+
+This document contains my Emacs configuration, which is tangled into [[file:config.el][config.el]].
+
+** Remove GUI bars.
+These settings disable the GUI elements like the menu bar, tool bar, and scroll bar
+for a cleaner, distraction-free interface.
+#+begin_src emacs-lisp
+  (setq inhibit-startup-screen t)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+#+end_src
+
+Export custom settings to seperate file.
+#+begin_src emacs-lisp
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(load custom-file)
+#+end_src
+
+Displays relative line numbers.
+#+begin_src emacs-lisp
+    (setq display-line-numbers-type 'relative)
+    (global-display-line-numbers-mode)
+#+end_src
+
+Store backup files in seperate folder.
+#+begin_src emacs-lisp
+(setq backup-directory-alist `(("." . "~/.saves")))
+#+end_src
+
+** Package Manager Configuration
+Configure Emacs to use the =MELPA= package repository.
+Initialize the package system.
+#+begin_src emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (package-initialize)
+#+end_src
+
+** Intalling and using 'use-package'
+#+begin_src emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+#+end_src
+
+** Theme
+#+begin_src emacs-lisp
+  (use-package standard-themes
+  :ensure t)
+  :config
+    (load-theme 'standard-dark)
+#+end_src
+
+** Evil-mode & Evil-collection
+For VI-like keybindings.
+#+begin_src emacs-lisp
+(use-package evil
+  :ensure t)
+(evil-mode 1)
+#+end_src
+
+** Magit (Magit is magic)
+A Git Porcelain inside Emacs.
+#+begin_src emacs-lisp
+(use-package magit
+  :ensure t)
+#+end_src
+
+** Ido mode
+#+begin_src emacs-lisp
+(use-package ido
+  :ensure t)
+(setq ido-everywhere t)
+(ido-mode 1)
+#+end_src
+
+** Org-roam
+A plain-text personal knowledge management system for building my personal Zettelkasten.
+Files are stored by default in: *~/RoamNotes*
+#+begin_src emacs-lisp
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory "~/RoamNotes")
+  :config
+  (org-roam-setup))
+#+end_src
+
+** EMMS
+Enable the /Emacs Multi-Media System/ (EMMS)
+Music files are located in *~/.emmsMusic/*.
+#+begin_src emacs-lisp
+(use-package emms
+  :ensure t)
+(use-package emms-setup
+  :ensure nil
+  :init
+  (add-hook 'emms-player-started-hook 'emms-show)
+  :config
+  (setq emms-show-format "Playing: %s")
+  (emms-all)
+  (emms-default-players)
+  (setq emms-source-file-default-directory "~/.emmsMusic/")
+)
+#+end_src
+
+** Rainbow delimiters
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :ensure t
+  :hook ((emacs-lisp-mode
+    scheme-mode
+    common-lisp-mode
+    lisp-mode
+    LaTeX-mode)))
+#+end_src
