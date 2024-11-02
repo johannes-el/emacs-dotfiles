@@ -50,6 +50,7 @@
 (setq ido-everywhere t)
 (ido-mode 1)
 
+(make-directory "~/RoamNotes")
 (use-package org-roam
   :ensure t
   :custom
