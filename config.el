@@ -50,7 +50,7 @@
 (setq ido-everywhere t)
 (ido-mode 1)
 
-(unless (file-exists-p "~RoamNotes")
+(unless (file-exists-p "~/RoamNotes")
   (make-directory "~/RoamNotes"))
   (use-package org-roam
     :ensure t

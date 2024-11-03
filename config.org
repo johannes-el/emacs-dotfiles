@@ -105,7 +105,7 @@ A Git Porcelain inside Emacs.
 A plain-text personal knowledge management system for building my personal Zettelkasten.
 Files are stored by default in: *~/RoamNotes*
 #+begin_src emacs-lisp
-(unless (file-exists-p "~RoamNotes")
+(unless (file-exists-p "~/RoamNotes")
   (make-directory "~/RoamNotes"))
   (use-package org-roam
     :ensure t
