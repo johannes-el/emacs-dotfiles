@@ -50,13 +50,14 @@
 (setq ido-everywhere t)
 (ido-mode 1)
 
-(make-directory "~/RoamNotes")
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory "~/RoamNotes")
-  :config
-  (org-roam-setup))
+(unless (file-exists-p "~RoamNotest")
+  (make-directory "~/RoamNotes"))
+  (use-package org-roam
+    :ensure t
+    :custom
+    (org-roam-directory "~/RoamNotes")
+    :config
+    (org-roam-setup))
 
 (use-package emms
   :ensure t)
