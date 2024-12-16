@@ -19,10 +19,10 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(use-package standard-themes
+(use-package gruber-darker-theme
 :ensure t)
 :config
-  (load-theme 'standard-dark)
+  (load-theme 'gruber-darker)
 
 (use-package evil
   :ensure t)
@@ -32,8 +32,8 @@
   :ensure t)
 
 (use-package eglot
-    :ensure t)
-  (require 'eglot)
+  :ensure t)
+(require 'eglot)
 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
 (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer"))
 (add-hook 'c-mode-hook 'eglot-ensure)
@@ -49,6 +49,10 @@
   :ensure t)
 (setq ido-everywhere t)
 (ido-mode 1)
+
+(use-package projectile
+  :ensure t)
+(setq projectile-mode +1)
 
 (unless (file-exists-p "~/RoamNotes")
   (make-directory "~/RoamNotes"))

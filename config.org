@@ -16,14 +16,14 @@ for a cleaner, distraction-free interface.
 
 Export custom settings to seperate file.
 #+begin_src emacs-lisp
-(setq custom-file (concat user-emacs-directory "custom.el"))
-(load custom-file)
+  (setq custom-file (concat user-emacs-directory "custom.el"))
+  (load custom-file)
 #+end_src
 
 Displays relative line numbers.
 #+begin_src emacs-lisp
-    (setq display-line-numbers-type 'relative)
-    (global-display-line-numbers-mode)
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode)
 #+end_src
 
 Store backup files in seperate folder.
@@ -49,10 +49,10 @@ Initialize the package system.
 
 ** Theme
 #+begin_src emacs-lisp
-  (use-package standard-themes
+  (use-package gruber-darker-theme
   :ensure t)
   :config
-    (load-theme 'standard-dark)
+    (load-theme 'gruber-darker)
 #+end_src
 
 ** Evil-mode & Evil-collection
@@ -74,9 +74,9 @@ The modular completion framework
 The Emacs LSP client that stays out of your way.
 Requires =clangd= and =rust-analyzer= to be installed.
 #+begin_src emacs-lisp
-    (use-package eglot
-      :ensure t)
-    (require 'eglot)
+  (use-package eglot
+    :ensure t)
+  (require 'eglot)
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
   (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer"))
   (add-hook 'c-mode-hook 'eglot-ensure)
@@ -99,6 +99,13 @@ A Git Porcelain inside Emacs.
   :ensure t)
 (setq ido-everywhere t)
 (ido-mode 1)
+#+end_src
+
+** Projectile (Projectile is a project interaction library for Emacs)
+#+begin_src emacs-lisp
+(use-package projectile
+  :ensure t)
+(setq projectile-mode +1)
 #+end_src
 
 ** Org-roam
