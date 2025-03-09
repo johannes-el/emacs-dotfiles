@@ -26,11 +26,21 @@
 (evil-mode 1)
 
 (use-package company
-  :ensure t)
+  :ensure t
+  :init
+  (global-company-mode))
+
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode))
 
 (use-package eglot
-  :ensure t)
+    :ensure t)
 (require 'eglot)
+
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
 
 (add-hook 'lisp-mode-hook 'eglot-ensure)
 (add-hook 'lisp-interaction-mode-hook 'eglot-ensure)
@@ -39,10 +49,36 @@
 (add-hook 'rust-mode-hook 'eglot-ensure)
 (add-hook 'go-mode-hook 'eglot-ensure)
 
+(add-hook 'latex-mode-hook 'eglot-ensure)
+(add-hook 'tex-mode-hook 'eglot-ensure)
+
 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
 (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer"))
 (add-to-list 'eglot-server-programs '((emacs-lisp-mode) . ("emacs-lsp")))
 (add-to-list 'eglot-server-programs '((lisp-mode lisp-interaction-mode) . ("cl-lsp")))
+(add-to-list 'eglot-server-programs '((latex-mode tex-mode) . ("texlab")))
+
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install))
+
+(use-package latex-preview-pane
+  :ensure t
+  :after (auctex)
+  :config
+  (latex-preview-pane-enable))
+
+(setq TeX-command-default "LatexMk")
+(setq TeX-compile-command "latexmk -pdf")
+(setq TeX-view-program-selection '((output-pdf "Zathura")))
+
+(use-package tex
+  :ensure auctex)
+
+(use-package org-latex-impatient
+  :ensure t)
+(org-latex-impatient-mode 1)
 
 (use-package sly
   :ensure t)
