@@ -49,10 +49,7 @@ Initialize the package system.
 
 ** Theme
 #+begin_src emacs-lisp
-  (use-package gruber-darker-theme
-  :ensure t)
-  :config
-    (load-theme 'gruber-darker)
+  (load-theme 'modus-vivendi)
 #+end_src
 
 ** Evil-mode & Evil-collection
@@ -74,16 +71,39 @@ The modular completion framework
 The Emacs LSP client that stays out of your way.
 Requires =clangd= and =rust-analyzer= to be installed.
 #+begin_src emacs-lisp
-  (use-package eglot
-    :ensure t)
-  (require 'eglot)
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-  (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer"))
-  (add-hook 'c-mode-hook 'eglot-ensure)
-  (add-hook 'c++-mode-hook 'eglot-ensure)
-  (add-hook 'cmake-mode-hook 'eglot-ensure)
-  (add-hook 'go-mode-hook 'eglot-ensure)
-  (add-hook 'rust-mode-hook 'eglot-ensure)
+(use-package eglot
+  :ensure t)
+(require 'eglot)
+
+(add-hook 'lisp-mode-hook 'eglot-ensure)
+(add-hook 'lisp-interaction-mode-hook 'eglot-ensure)
+(add-hook 'emacs-lisp-mode-hook 'eglot-ensure)
+(add-hook 'python-mode-hook 'eglot-ensure)
+(add-hook 'rust-mode-hook 'eglot-ensure)
+(add-hook 'go-mode-hook 'eglot-ensure)
+
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer"))
+(add-to-list 'eglot-server-programs '((emacs-lisp-mode) . ("emacs-lsp")))
+(add-to-list 'eglot-server-programs '((lisp-mode lisp-interaction-mode) . ("cl-lsp")))
+#+end_src
+
+** SLY (Sylvester the Cat’s Common Lisp IDE)
+#+begin_src emacs-lisp
+(use-package sly
+  :ensure t)
+#+end_src
+
+** Paredit (parenthetical editing in Emacs)
+#+begin_src emacs-lisp
+(use-package paredit
+  :ensure t
+  :hook ((lisp-mode . paredit-mode)
+         (emacs-lisp-mode . paredit-mode)
+         (clojure-mode . paredit-mode)
+         (scheme-mode . paredit-mode)
+         (sly-mode . paredit-mode)
+         (sly-repl-mode . paredit-mode)))
 #+end_src
 
 ** Magit (Magit is magic)
@@ -106,6 +126,8 @@ A Git Porcelain inside Emacs.
 (use-package projectile
   :ensure t)
 (setq projectile-mode +1)
+(global-set-key (kbd "C-c p f") 'projectile-find-file)
+(global-set-key (kbd "C-c p p") 'projectile-switch-project)
 #+end_src
 
 ** Org-roam
@@ -122,6 +144,22 @@ Files are stored by default in: *~/RoamNotes*
     (org-roam-setup))
 #+end_src
 
+
+** org-superstar-mode
+Prettify headings and plain lists in Org mode
+#+begin_src emacs-lisp
+(use-package org-superstar
+  :ensure t
+  :hook (org-mode . org-superstar-mode)
+  :config
+  (setq org-superstar-headline-bullets-list '("•" "◉" "○" "◇" "◆"))
+  (setq org-superstar-todo-bullet-alist '(("TODO" . "◯")
+                                         ("DONE" . "✔")))
+  (setq org-superstar-item-bullet-alist '(("-" . "◆")
+                                         ("+" . "◇")
+                                         ("*" . "●"))))
+#+end_src
+  
 ** EMMS
 Enable the /Emacs Multi-Media System/ (EMMS)
 Music files are located in *~/.emmsMusic/*.
