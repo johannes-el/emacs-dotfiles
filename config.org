@@ -105,14 +105,6 @@ Requires =clangd= and =rust-analyzer= to be installed.
 (add-to-list 'eglot-server-programs '((latex-mode tex-mode) . ("texlab")))
 #+end_src
 
-** Pdf-Tools
-#+begin_src emacs-lisp
-(use-package pdf-tools
-  :ensure t
-  :config
-  (pdf-tools-install))
-#+end_src
-
 ** Latex preview pane
 #+begin_src emacs-lisp
 (use-package latex-preview-pane

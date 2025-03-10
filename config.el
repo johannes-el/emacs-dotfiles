@@ -58,11 +58,6 @@
 (add-to-list 'eglot-server-programs '((lisp-mode lisp-interaction-mode) . ("cl-lsp")))
 (add-to-list 'eglot-server-programs '((latex-mode tex-mode) . ("texlab")))
 
-(use-package pdf-tools
-  :ensure t
-  :config
-  (pdf-tools-install))
-
 (use-package latex-preview-pane
   :ensure t
   :after (auctex)
