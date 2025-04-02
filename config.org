@@ -49,7 +49,11 @@ Initialize the package system.
 
 ** Theme
 #+begin_src emacs-lisp
-  (load-theme 'modus-vivendi)
+(use-package gruvbox-theme
+  :ensure t)
+(use-package gruber-darker-theme
+  :ensure t)
+(load-theme 'gruber-darker t)
 #+end_src
 
 ** Evil-mode & Evil-collection
