@@ -19,7 +19,11 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(load-theme 'modus-vivendi)
+(use-package gruvbox-theme
+  :ensure t)
+(use-package gruber-darker-theme
+  :ensure t)
+(load-theme 'gruvbox t)
 
 (use-package evil
   :ensure t)
