@@ -109,6 +109,14 @@ Requires =clangd= and =rust-analyzer= to be installed.
 (add-to-list 'eglot-server-programs '((latex-mode tex-mode) . ("texlab")))
 #+end_src
 
+** C++ Code Style
+#+begin_src emacs-lisp
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (c-set-style "linux")
+            (setq c-basic-offset 8)))
+#+end_src
+
 ** Latex preview pane
 #+begin_src emacs-lisp
 (use-package latex-preview-pane

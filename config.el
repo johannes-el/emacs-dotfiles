@@ -62,6 +62,11 @@
 (add-to-list 'eglot-server-programs '((lisp-mode lisp-interaction-mode) . ("cl-lsp")))
 (add-to-list 'eglot-server-programs '((latex-mode tex-mode) . ("texlab")))
 
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (c-set-style "linux")
+            (setq c-basic-offset 8)))
+
 (use-package latex-preview-pane
   :ensure t
   :after (auctex)
