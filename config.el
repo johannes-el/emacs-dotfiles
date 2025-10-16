@@ -143,6 +143,11 @@
   :config
   (helm-mode 1))
 
+(defun my-helm-split-window-1/4 (window)
+  "Split WINDOW and allocate 1/4 of its height to the new window."
+  (split-window window (floor (* 0.75 (window-total-height window))) 'below))
+(setq helm-split-window-preferred-function #'my-helm-split-window-1/4)
+
 (use-package helm-projectile
   :ensure t
   :after (helm projectile)
