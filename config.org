@@ -47,6 +47,16 @@ Initialize the package system.
   (package-install 'use-package))
 #+end_src
 
+** vterm: Real terminal emulator, not just a shell-mode (which is pure Emacs Lisp)
+#+begin_src emacs-lisp
+(use-package vterm
+  :ensure t
+  :hook (vterm-mode . (lambda () (setq-local global-hl-line-mode nil)))
+  :config
+  (setq vterm-shell "/bin/fish")
+)
+#+end_src
+
 ** Theme
 #+begin_src emacs-lisp
 (use-package gruvbox-theme
@@ -204,19 +214,43 @@ A Git Porcelain inside Emacs.
 
 ** Ido mode
 #+begin_src emacs-lisp
-(use-package ido
-  :ensure t)
-(setq ido-everywhere t)
-(ido-mode 1)
+;; (use-package ido
+;;   :ensure t)
+;; (setq ido-everywhere t)
+;; (ido-mode 1)
+#+end_src
+
+** Helm
+#+begin_src emacs-lisp
+(use-package helm
+  :ensure t
+  :config
+  (helm-mode 1))
+#+end_src
+
+** Helm projectile
+#+begin_src emacs-lisp
+(use-package helm-projectile
+  :ensure t
+  :after (helm projectile)
+  :config
+  (helm-projectile-on))
 #+end_src
 
 ** Projectile (Projectile is a project interaction library for Emacs)
 #+begin_src emacs-lisp
 (use-package projectile
-  :ensure t)
-(setq projectile-mode +1)
-(global-set-key (kbd "C-c p f") 'projectile-find-file)
-(global-set-key (kbd "C-c p p") 'projectile-switch-project)
+  :ensure t
+  :init
+  (projectile-mode +1)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :config
+  (setq projectile-completion-system 'helm)
+  (setq projectile-project-search-path '("~/Programming/"))
+  (define-key projectile-mode-map (kbd "C-c p f") 'projectile-find-file)
+  (define-key projectile-mode-map (kbd "C-c p p") 'projectile-switch-project)
+  (define-key projectile-mode-map (kbd "C-c p b") 'projectile-switch-to-buffer))
 #+end_src
 
 ** Org-roam

@@ -19,6 +19,13 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(use-package vterm
+  :ensure t
+  :hook (vterm-mode . (lambda () (setq-local global-hl-line-mode nil)))
+  :config
+  (setq vterm-shell "/bin/fish")
+)
+
 (use-package gruvbox-theme
   :ensure t)
 (use-package gruber-darker-theme
@@ -126,16 +133,34 @@
 (use-package magit
   :ensure t)
 
-(use-package ido
-  :ensure t)
-(setq ido-everywhere t)
-(ido-mode 1)
+;; (use-package ido
+;;   :ensure t)
+;; (setq ido-everywhere t)
+;; (ido-mode 1)
+
+(use-package helm
+  :ensure t
+  :config
+  (helm-mode 1))
+
+(use-package helm-projectile
+  :ensure t
+  :after (helm projectile)
+  :config
+  (helm-projectile-on))
 
 (use-package projectile
-  :ensure t)
-(setq projectile-mode +1)
-(global-set-key (kbd "C-c p f") 'projectile-find-file)
-(global-set-key (kbd "C-c p p") 'projectile-switch-project)
+  :ensure t
+  :init
+  (projectile-mode +1)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :config
+  (setq projectile-completion-system 'helm)
+  (setq projectile-project-search-path '("~/Programming/"))
+  (define-key projectile-mode-map (kbd "C-c p f") 'projectile-find-file)
+  (define-key projectile-mode-map (kbd "C-c p p") 'projectile-switch-project)
+  (define-key projectile-mode-map (kbd "C-c p b") 'projectile-switch-to-buffer))
 
 (unless (file-exists-p "~/RoamNotes")
   (make-directory "~/RoamNotes"))
