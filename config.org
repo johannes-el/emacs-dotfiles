@@ -53,7 +53,7 @@ Initialize the package system.
   :ensure t)
 (use-package gruber-darker-theme
   :ensure t)
-(load-theme 'gruvbox t)
+(load-theme 'wombat t)
 #+end_src
 
 ** Evil-mode & Evil-collection
@@ -186,6 +186,13 @@ Preview latex math equations.
          (scheme-mode . paredit-mode)
          (sly-mode . paredit-mode)
          (sly-repl-mode . paredit-mode)))
+#+end_src
+
+** Undo tree
+#+begin_src emacs-lisp
+(use-package undo-tree
+  :ensure t)
+(undo-tree-mode 1)
 #+end_src
 
 ** Magit (Magit is magic)

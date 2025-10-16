@@ -23,7 +23,7 @@
   :ensure t)
 (use-package gruber-darker-theme
   :ensure t)
-(load-theme 'gruvbox t)
+(load-theme 'wombat t)
 
 (use-package evil
   :ensure t)
@@ -118,6 +118,10 @@
          (scheme-mode . paredit-mode)
          (sly-mode . paredit-mode)
          (sly-repl-mode . paredit-mode)))
+
+(use-package undo-tree
+  :ensure t)
+(undo-tree-mode 1)
 
 (use-package magit
   :ensure t)
